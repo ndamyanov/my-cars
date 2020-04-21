@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes shopping-cart-resize {
+  from {
+    transform: scale(0.7);
+  }
+  to {
+    transform: scale(1.7);
+  }
+}
