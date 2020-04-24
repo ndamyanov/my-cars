@@ -1,51 +1,64 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 //import { connect } from 'react-redux';
-import {Container, MenuItem, MenuAction, ShippingCartItems, MenuItemSearch, SearchInput} from './styles';
+import {Container, MenuItem, MenuAction, MenuItemSearch, SearchInput} from './styles';
 import {Link} from "react-router-dom";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import HomeIcon from '@material-ui/icons/Home';
+import { withFirebase } from '../../components/Firebase';
 
 //myRef = React.createRef();
 
 const NavMenu = (props) => {
-  
+  const authNavigation = () => (
+  <div>{props.authUser ? <NavigationAuth /> : <NavigationNonAuth />}</div>)
+    
+  const onExit = () => {
+    console.log('exit')
+    props.firebase.signOut();
+  }
+
+  const NavigationAuth = () => (
+    <Container>
+      <MenuItem>
+        <Link to="/"><HomeIcon fontSize="large"/></Link>
+      </MenuItem>
+      <MenuItem>
+        <Link to="/cars"><DriveEtaIcon fontSize="large" /></Link>
+      </MenuItem>
+      <MenuItemSearch>
+        {/* <SearchInput type='text' placeholder='Search' /> */}
+      </MenuItemSearch>
+
+      <MenuAction>
+        
+        <button type="submit" onClick={onExit}><ExitToAppIcon fontSize="large" /></button>
+      </MenuAction>
+    </Container>
+  );
+
+  const NavigationNonAuth = () => (
+    <Container>
+      <MenuItem>
+        <Link to="/">Home</Link>
+      </MenuItem>
+      {/* <MenuItem>
+        <Link to="/cars">Cars</Link> 
+      </MenuItem> */}
+      <MenuItemSearch>
+        {/* <SearchInput type='text' placeholder='Search' /> */}
+      </MenuItemSearch>
+      <MenuAction>
+        <Link to="/login">Login</Link>
+      </MenuAction>
+      <MenuAction>
+        <Link to="/register">Register</Link>
+      </MenuAction>
+    </Container>
+  );
+
   return(
-  <Container>
-    <MenuItem>
-    <Link to="/">Home</Link>
-    </MenuItem>
-    <MenuItem>
-    <Link to="/cars">Cars</Link>
-    </MenuItem>
-    <MenuItemSearch>
-    <SearchInput type='text' placeholder='Search' />
-    </MenuItemSearch>
-    <MenuAction>
-    <Link to="/login">Login</Link>
-    </MenuAction>
-    <MenuAction>
-    <Link to="/register">Register</Link>
-    </MenuAction>
-    <MenuAction>
-    <Link to="/">Logout</Link>
-    </MenuAction>
-  </Container>
+    authNavigation()
 )}
 
-// const mapStateToProps = (state /*, ownProps*/) => {
-//   return {
-//     count: state.shoppingCart.count
-//   }
-// }
-
-// const mapDispatchToProps = (dispatch) => ({
-//   addItem: () => {
-//     dispatch({type: 'ADD'})
-//   }
-// })
-
-
-// export default connect(
-//   mapStateToProps,
-//   null
-// )(NavMenu)
-
-export default NavMenu;
+export default withFirebase(NavMenu);

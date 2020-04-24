@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 // import ControlLabel from "react-bootstrap/ControlLabel";
-import {StyledLogin, StyledForm} from './styles';
+import { withFirebase } from '../../components/Firebase';
+import {StyledForm} from './styles';
 
-const Login = () => {
+const Login = (props) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,20 +15,14 @@ const Login = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
+    props.firebase.signIn(email, password)
+    props.history.push('/');
   }
 
 
 return (
-  // <form>
-  //   <input type='text' placeholder='username'></input>
-  //   <input type='password' placeholder='password'></input>
-  //   <input type='submit' value='Submit' onSubmit={onLogin}/>
-  // </form>
-
-
-<StyledLogin>
       <StyledForm onSubmit={handleSubmit}>
-        <FormGroup controlId="email" bsSize="large">
+        <FormGroup controlId="email">
           <FormLabel>Email</FormLabel>
           <FormControl
             autoFocus
@@ -36,7 +31,7 @@ return (
             onChange={e => setEmail(e.target.value)}
           />
         </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
+        <FormGroup controlId="password" >
           <FormLabel>Password</FormLabel>
           <FormControl
             value={password}
@@ -44,12 +39,11 @@ return (
             type="password"
           />
         </FormGroup>
-        <Button block bsSize="large" disabled={!validateForm()} type="submit">
+        <Button block disabled={!validateForm()} type="submit">
           Login
         </Button>
       </StyledForm>
-    </StyledLogin>
   );
 }
 
-export default Login;
+export default withFirebase(Login);

@@ -22,26 +22,28 @@ class Firebase {
     
     this.auth = app.auth();
 
-    this.SignIn = this.SignIn.bind(this);
-    this.SignOut = this.SignOut.bind(this);
+    this.signIn = this.signIn.bind(this);
+    this.signOut = this.signOut.bind(this);
   }
 
   cars = () => this.db.ref('cars');
   //light = () =>  this.db.ref('Light');
 
-  SignIn(email, password) {
+  car = uid => this.db.ref(`cars/${uid}`);
+
+  signIn(email, password) {
     return this.auth.signInWithEmailAndPassword(email, password);
   }
 
   // SignIn = (email, password) =>
   //   this.auth.signInWithEmailAndPassword(email, password);
 
-//   SignUp (email, password) {
-//     this.auth.createUserWithEmailAndPassword(email, password);
-// }
+  register (email, password) {
+    return this.auth.createUserWithEmailAndPassword(email, password);
+}
   // SignOut = () => this.auth.signOut();
 
-  SignOut() {
+  signOut() {
     return this.auth.signOut();
   }
 }

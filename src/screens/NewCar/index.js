@@ -6,13 +6,17 @@ const NewCar = (props) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
-  const onNewCar = () => {
+  const onNewCar = (event) => {
+    event.preventDefault();
     console.log('add new car');
-    debugger;
-    props.firebase.cars().push({
+    let uid = props.firebase.auth.currentUser.uid;
+debugger;
+    props.firebase.cars().child(uid).push({
+      //uid: uid,
       name: name,
       description: description
     });
+    props.setShowModal(false);
   }
 return (
   <form onSubmit={onNewCar}>

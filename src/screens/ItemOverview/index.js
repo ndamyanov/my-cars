@@ -1,11 +1,10 @@
 import React from 'react';
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import {StyledCard,} from './styles';
-import {addItem} from '../../reducers/actions';
+// import {addItem} from '../../reducers/actions';
 
 const Item = (props) => {
   //const {title, price, quantity, imgSrc} = props.data;
-  debugger;
   const {name, description} = props.data.value;
   
   const onDetails = () => {

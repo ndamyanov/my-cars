@@ -11,6 +11,7 @@ export const Container = styled.div`
 
 export const SearchField = styled.div`
   margin: 3em;
+  width: 100%;
 `;
 
 export const StyledSearchIcon = styled(SearchIcon)`
@@ -33,8 +34,8 @@ export const SearchInput = styled.input`
   outline: none;
   padding-left: 3em;
   font-size: 1.2em;
+  max-width: -webkit-fill-available;
 `;
-
 
 export const AddButton = styled.button`
   background-color: #4CAF50; /* Green */

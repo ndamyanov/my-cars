@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -7,13 +7,26 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Cars from './pages/Cars';
+import { withFirebase } from './components/Firebase';
 
-function App() {
+function App(props) {
+
+  const [authUser, setAuthUser] = useState(null);
+
+ useEffect(() => {
+      props.firebase.auth.onAuthStateChanged(authUser => {
+        if (authUser && !authUser.emailVerified) {
+          authUser.sendEmailVerification();
+        }
+ 
+           setAuthUser(authUser)
+      });
+  },[authUser, props.firebase.auth])
+
   return (
     <div className="App">
-      <body>
         <Router>
-        <NavMenu />
+        <NavMenu authUser={authUser} />
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/login' component={Login} />
@@ -22,9 +35,8 @@ function App() {
           <Route path='/cars' component={Cars} />
         </Switch>
         </Router>
-      </body>
     </div>
   );
 }
 
-export default App;
+export default withFirebase(App);

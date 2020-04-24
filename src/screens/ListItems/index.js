@@ -6,32 +6,33 @@ import Modal from 'react-bootstrap/Modal'
 import NewCar from '../NewCar';
 import { Add } from '@material-ui/icons';
 
-
 const ListItems = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [cars, setCars] = useState([]);
   const [searchText, setSearchText] = useState([]);
 
+  let isAuthenticated = props.firebase.auth.currentUser === null;
+  let uid = props.firebase.auth.currentUser?.uid;
+
 useEffect(() => {
-  props.firebase.cars().on('value', snapshot => {
-    console.log(snapshot.val())
-    const allCars = snapshot.val();
-    let carsList = Object.values(allCars).map(val => ({
-      ...allCars[val],
-      value: val,
-    }));
+    props.firebase.car(uid).on('value', snapshot => {
+      const allCars = snapshot.val();
+      let carsList = Object.values(allCars).map(val => ({
+        ...allCars[val],
+        value: val,
+      }));
+  
+      if(searchText.length > 0) {
+        carsList = carsList.filter(c => c.value.name.includes(searchText));
+      }
 
-    if(searchText.length > 0) {
-      carsList = carsList.filter(c => c.value.name.includes(searchText));
-    }
-
-    setCars(carsList)
-
-    return () => {
-      props.firebase.cars().off();
-    }
-  })
-}, [searchText])
+      setCars(carsList)
+  
+      // return () => {
+      //   props.firebase.cars().off();
+      // }
+    })
+}, [searchText, props.firebase, uid]);
 
 return(
   <Container>
@@ -39,8 +40,8 @@ return(
         <StyledSearchIcon />
         <SearchInput type='text' value={searchText} onChange={(event) => setSearchText(event.target.value)} />
     </SearchField>
-    {/* <div>{searchText}</div> */}
-    <AddButton onClick={() => setShowModal(true)}><Add fontSize="large" /></AddButton>
+
+    <AddButton hidden={isAuthenticated} onClick={() => setShowModal(true)}><Add fontSize="large" /></AddButton>
     <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
@@ -51,11 +52,10 @@ return(
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <NewCar />
+          <NewCar setShowModal={setShowModal} />
         </Modal.Body>
       </Modal>
-    {cars.map(i => (<ItemOverview data={i}></ItemOverview>))}
-   
+    {cars.map(i => (<ItemOverview data={i} key={i.value.name}></ItemOverview>))}
   </Container>
 )
 }
