@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
+import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import { withFirebase } from '../../components/Firebase';
+import {StyledForm} from './styles';
 
 const NewCar = (props) => {
 
@@ -8,22 +10,47 @@ const NewCar = (props) => {
 
   const onNewCar = (event) => {
     event.preventDefault();
-    console.log('add new car');
+
     let uid = props.firebase.auth.currentUser.uid;
-debugger;
     props.firebase.cars().child(uid).push({
-      //uid: uid,
+      // carId: uid,
       name: name,
       description: description
     });
+    // props.firebase.cars().child(uid).child(uid).set({
+    //   // carId: uid,
+    //   name: name,
+    //   description: description
+    // });
     props.setShowModal(false);
   }
 return (
-  <form onSubmit={onNewCar}>
-    <input type='text' placeholder='name' value={name} onChange={(val) => setName(val.target.value)} />
-    <input type='text' placeholder='description' value={description} onChange={(val) => setDescription(val.target.value)} />
-    <input type='submit' value='Submit' />
-  </form>
+  <StyledForm onSubmit={onNewCar}>
+        <FormGroup controlId="name">
+          <FormLabel>Name</FormLabel>
+          <FormControl
+            autoFocus
+            type="name"
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
+        </FormGroup>
+          <FormGroup controlId="name">
+          <FormLabel>Name</FormLabel>
+          <FormControl
+            autoFocus
+            type="description"
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+          />
+        </FormGroup>
+    {/* <input type='text' placeholder='name' value={name} onChange={(val) => setName(val.target.value)} /> */}
+    {/* <input type='text' placeholder='description' value={description} onChange={(val) => setDescription(val.target.value)} /> */}
+    {/* <input type='submit' value='Submit' /> */}
+    <Button block type="submit">
+          Submit
+        </Button>
+  </StyledForm>
 )
 }
 

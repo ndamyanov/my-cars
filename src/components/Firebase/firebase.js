@@ -26,10 +26,12 @@ class Firebase {
     this.signOut = this.signOut.bind(this);
   }
 
+  user = (uid) => this.db.ref(`users/${uid}`);
+
   cars = () => this.db.ref('cars');
   //light = () =>  this.db.ref('Light');
 
-  car = uid => this.db.ref(`cars/${uid}`);
+  carsOfUser = uid => this.db.ref(`cars/${uid}`);
 
   signIn(email, password) {
     return this.auth.signInWithEmailAndPassword(email, password);

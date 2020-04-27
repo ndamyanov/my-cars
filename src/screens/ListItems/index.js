@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ItemOverview from '../ItemOverview';
 import {Container, AddButton, SearchInput, SearchField, StyledSearchIcon} from './styles';
-import { withFirebase } from '../../components/Firebase';
+import { withFirebase } from '../../components/Firebase';              
 import Modal from 'react-bootstrap/Modal'
 import NewCar from '../NewCar';
 import { Add } from '@material-ui/icons';
@@ -15,10 +15,13 @@ const ListItems = (props) => {
   let uid = props.firebase.auth.currentUser?.uid;
 
 useEffect(() => {
-    props.firebase.car(uid).on('value', snapshot => {
-      const allCars = snapshot.val();
-      let carsList = Object.values(allCars).map(val => ({
-        ...allCars[val],
+    props.firebase.carsOfUser(uid).on('value', snapshot => {
+      const userCars = snapshot.val();
+      debugger;
+
+      let carsList = Object.values(userCars).map(val => ({
+        ...userCars[val],
+        key:  Object.keys(userCars).find(key => userCars[key] === val),
         value: val,
       }));
   

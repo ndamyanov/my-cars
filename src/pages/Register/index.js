@@ -27,8 +27,18 @@ const Register = (props) => {
     props.firebase
       .register(email, passwordOne)
       .then(authUser => {
-        //debugger;
+        debugger;
         console.log(authUser);
+
+        // props.firebase.cars().child(uid).push({
+        //   carId: uid,
+        //   name: name,
+        //   description: description
+        // });
+
+        //TODO
+        //props.firebase.user(authUser.currentUser.uid).push(authUser);
+
         //authUser.sendEmailVerification();
         //this.setState({ ...INITIAL_STATE });
       })

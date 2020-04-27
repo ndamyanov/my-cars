@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Cars from './pages/Cars';
+import ItemDetails from './screens/ItemDetails';
 import { withFirebase } from './components/Firebase';
 
 function App(props) {
@@ -31,8 +32,11 @@ function App(props) {
           <Route exact path='/' component={Home} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
-
+         
           <Route path='/cars' component={Cars} />
+          <Route path="/car/:carId" component={ItemDetails} />
+
+
         </Switch>
         </Router>
     </div>
