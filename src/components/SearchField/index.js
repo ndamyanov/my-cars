@@ -5,8 +5,8 @@ const Search = (props) =>  {
   const {searchPattern, setSearchPattern} = props;
 
   return(
-<SearchField>
-    <StyledSearchIcon />
+    <SearchField>
+      <StyledSearchIcon />
         <SearchInput type='text' value={searchPattern} onChange={(event) => setSearchPattern(event.target.value)} />
     </SearchField>
   )

@@ -33,6 +33,12 @@ export const AddButton = styled.button`
 export const StyledCard = styled.div`
   border: 1px solid black;
   margin: 1em;
-  //background-color: #282c34;
-  //color: white;
+`;
+
+export const ListContainer = styled.div`
+  border: 1px solid black;
+  margin: 1em;
+  width: 80%;
+  text-align: center;
+  align-items: center;
 `;

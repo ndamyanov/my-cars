@@ -1,38 +1,28 @@
 import React from 'react';
 // import { connect } from "react-redux";
-import {StyledCard,} from './styles';
+import {StyledCard, Title} from './styles';
 import {Link} from "react-router-dom";
+import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 // import {addItem} from '../../reducers/actions';
 
 const ItemOverview = (props) => {
   //const {title, price, quantity, imgSrc} = props.data;
   //const {carId, name, description} = props.data.value;
   const {key, value} = props.data;
-  const {carId, name, description} = value;
-  
-  // const onDetails = () => {
-  //   console.log('details')
-  //   //props.addItem(data);
-  // }
+  const {carNumber, vin, model, year} = value;
 
   return (
     <StyledCard>
-      <h2>{carId}</h2>
-      <h2>{name}</h2>
-      <div>{description}</div>
-      {/* <button onClick={() => onDetails(props.data)}>Details</button> */}
-      {/* <div> <Link to={{pathname: "/car/", car: props.data.value}}>Details</Link></div> */}
-      <div> <Link to={{pathname: `/car/${key}` }}>Details</Link></div>
-      {/* <div> <Link to="/client" >Details</Link></div> */}
+      <Link to={{pathname: `/car/${key}` }}><Title>{carNumber}</Title></Link>
+      <div>{vin}</div>
+      <div><Link to={{pathname: `/car/${key}` }}><ForwardRoundedIcon fontSize="large" /></Link></div>
+
+      <div>{model}</div>
+      <div>{year}</div>
+
   </StyledCard>
   )
 }
-
-// const mapDispatchToProps = (dispatch) => ({
-//   addItem: (data) => {
-//     dispatch({type: 'ADD'}, data)
-//   }
-// })
 
 export default ItemOverview;
 

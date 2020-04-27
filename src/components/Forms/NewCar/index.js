@@ -6,19 +6,30 @@ import {StyledForm} from './styles';
 
 const NewCar = (props) => {
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [carNumber, setCarNumber] = useState('');
+  const [vin, setVin] = useState('');
+  const [model, setModel] = useState('');
+  const [year, setYear] = useState('');
   const {showModal, setShowModal} = props;
+
+  const validateForm = () => {
+    return carNumber.length > 0 
+        && vin.length > 0
+        && model.length > 0
+        && year.length > 0;
+  }
 
   const onNewCar = (event) => {
     event.preventDefault();
 
     let uid = props.firebase.auth.currentUser.uid;
     props.firebase.cars().child(uid).push({
-      // carId: uid,
-      name: name,
-      description: description
+      carNumber: carNumber,
+      vin: vin,
+      model: model,
+      year: year,
     });
+
     // props.firebase.cars().child(uid).child(uid).set({
     //   // carId: uid,
     //   name: name,
@@ -40,28 +51,43 @@ return (
         </Modal.Header>
         <Modal.Body>
         <StyledForm onSubmit={onNewCar}>
-        <FormGroup controlId="name">
-          <FormLabel>Name</FormLabel>
+        <FormGroup controlId="carNumber">
+          <FormLabel>Car Number</FormLabel>
           <FormControl
             autoFocus
-            type="name"
-            value={name}
-            onChange={e => setName(e.target.value)}
+            type="text"
+            value={carNumber}
+            onChange={e => setCarNumber(e.target.value)}
           />
         </FormGroup>
-          <FormGroup controlId="description">
-          <FormLabel>Description</FormLabel>
+          <FormGroup controlId="vin">
+          <FormLabel>VIN</FormLabel>
           <FormControl
             autoFocus
-            type="description"
-            value={description}
-            onChange={e => setDescription(e.target.value)}
+            type="text"
+            value={vin}
+            onChange={e => setVin(e.target.value)}
           />
         </FormGroup>
-    {/* <input type='text' placeholder='name' value={name} onChange={(val) => setName(val.target.value)} /> */}
-    {/* <input type='text' placeholder='description' value={description} onChange={(val) => setDescription(val.target.value)} /> */}
-    {/* <input type='submit' value='Submit' /> */}
-    <Button block type="submit">
+        <FormGroup controlId="model">
+          <FormLabel>Model</FormLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={model}
+            onChange={e => setModel(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup controlId="year">
+          <FormLabel>Year</FormLabel>
+          <FormControl
+            autoFocus
+            type="text"
+            value={year}
+            onChange={e => setYear(e.target.value)}
+          />
+        </FormGroup>
+    <Button block type="submit" disabled={!validateForm()}>
           Submit
         </Button>
   </StyledForm>

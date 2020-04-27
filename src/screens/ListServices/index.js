@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ItemOverview from '../../components/ItemOverview';
-import {Container, AddButton, StyledCard} from './styles';
+import {Container, AddButton, StyledCard, ListContainer} from './styles';
 import Search from '../../components/SearchField';
 import { withFirebase } from '../../components/Firebase';           
 
@@ -44,7 +44,9 @@ return(
     <NewService onAddService={onAddService} showModal={showModal} setShowModal={setShowModal} />
     
   {/* {list()} */}
+  <ListContainer>
   {services.map(i => (<StyledCard>{i.value.date} => {i.value.description}</StyledCard>))}
+  </ListContainer>
   </Container>
 )
 }

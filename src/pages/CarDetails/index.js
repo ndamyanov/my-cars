@@ -22,17 +22,21 @@ const ItemDetails = (props) => {
     props.firebase.cars().child(uid).child(carId).child('services').push(service)
   };
 
+  // const {carNumber, vin, model, year} = value;
 return(
 <div>
-  <h2>test</h2>
+  <h2>{car.carNumber}</h2>
 <div>
 test
 </div>
 <div>
- {car.name}
+ {car.vin}
 </div>
 <div>
- {car.description}
+ {car.model}
+</div>
+<div>
+ {car.year}
 </div>
 <div>
  <ListServices

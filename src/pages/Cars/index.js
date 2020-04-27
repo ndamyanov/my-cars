@@ -19,16 +19,20 @@ const Cars = (props) => {
   useEffect(() => {
     props.firebase.carsOfUser(uid).on('value', snapshot => {
       const userCars = snapshot.val();
-
-      let carsList = Object.values(userCars).map(val => ({
-        ...userCars[val],
-        key:  Object.keys(userCars).find(key => userCars[key] === val),
-        value: val,
-      }));
+      let carsList = [];
+      if(userCars) {
+        carsList = Object.values(userCars).map(val => ({
+          ...userCars[val],
+          key:  Object.keys(userCars).find(key => userCars[key] === val),
+          value: val,
+        }));
+      }
 
       //filter
       if(searchPattern.length > 0) {
-        carsList = carsList.filter(c => c.value.name.includes(searchPattern));
+        carsList = carsList.filter(c => 
+             c.value.carNumber.includes(searchPattern)
+          || c.value.vin.includes(searchPattern));
       }
 
       setCars(carsList)

@@ -6,9 +6,17 @@ import {StyledForm} from './styles';
 
 const NewService = (props) => {
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'));
   const [description, setDescription] = useState('');
+  const [km, setKm] = useState('');
   const {showModal, setShowModal, onAddService} = props;
+
+  const validateForm = () => {
+    debugger;
+    return date !== ''
+        && km.length > 0
+        && description.length > 0;
+  }
 
   const onNewService = (event) => {
     event.preventDefault();
@@ -32,7 +40,7 @@ return (
         </Modal.Header>
         <Modal.Body>
         <StyledForm onSubmit={onNewService}>
-        <FormGroup controlId="name">
+        <FormGroup controlId="date">
           <FormLabel>Date</FormLabel>
           <FormControl
             autoFocus
@@ -45,13 +53,22 @@ return (
           <FormLabel>Description</FormLabel>
           <FormControl
             autoFocus
-            type="description"
+            type="text"
             value={description}
             onChange={e => setDescription(e.target.value)}
           />
         </FormGroup>
+        <FormGroup controlId="km">
+          <FormLabel>km</FormLabel>
+          <FormControl
+            autoFocus
+            type="number"
+            value={km}
+            onChange={e => setKm(e.target.value)}
+          />
+        </FormGroup>
 
-    <Button block type="submit">
+    <Button block type="submit" disabled={!validateForm()}>
           Submit
         </Button>
   </StyledForm>
