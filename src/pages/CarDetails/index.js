@@ -1,30 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import { withFirebase } from '../../components/Firebase';
+import ListServices from '../../screens/ListServices';
 
 
 const ItemDetails = (props) => {
-console.log('render')
-  const { carId } = useParams();
-  const uid = props.firebase.auth.currentUser?.uid;
   const [car, setCar] = useState({});
+  const [searchPattern, setSearchPattern] = useState('');
 
-  // let { testvalue } = useParams();
-  // const { name, description } = props.location.car;
-  //console.log(car);
-  
-  //let isAuthenticated = props.firebase.auth.currentUser === null;
+  const uid = props.firebase.auth.currentUser?.uid;
+  const { carId } = useParams();
   
   useEffect(() => {
-    console.log('use effect')
-    debugger;
     props.firebase.cars().child(uid).child(carId).on('value', snapshot => {
       const currentCar = snapshot.val();
-
       setCar(currentCar);
   })
   }, [carId])
 
+  const onAddService = (service) => {
+    props.firebase.cars().child(uid).child(carId).child('services').push(service)
+  };
 
 return(
 <div>
@@ -39,7 +35,12 @@ test
  {car.description}
 </div>
 <div>
- test
+ <ListServices
+  data={car.services}
+  //setData={setCar} 
+  onAddService={onAddService} 
+  searchPattern={searchPattern} 
+  setSearchPattern={setSearchPattern} />
 </div>
 </div>
 )}

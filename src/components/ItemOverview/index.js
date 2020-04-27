@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 // import {addItem} from '../../reducers/actions';
 
 const ItemOverview = (props) => {
-  debugger;
   //const {title, price, quantity, imgSrc} = props.data;
   //const {carId, name, description} = props.data.value;
   const {key, value} = props.data;

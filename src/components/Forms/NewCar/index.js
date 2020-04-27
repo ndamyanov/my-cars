@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import { withFirebase } from '../../components/Firebase';
+import { withFirebase } from '../../Firebase';
+import Modal from 'react-bootstrap/Modal'
 import {StyledForm} from './styles';
 
 const NewCar = (props) => {
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const {showModal, setShowModal} = props;
 
   const onNewCar = (event) => {
     event.preventDefault();
@@ -25,7 +27,19 @@ const NewCar = (props) => {
     props.setShowModal(false);
   }
 return (
-  <StyledForm onSubmit={onNewCar}>
+
+
+  <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Add new Car
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <StyledForm onSubmit={onNewCar}>
         <FormGroup controlId="name">
           <FormLabel>Name</FormLabel>
           <FormControl
@@ -35,8 +49,8 @@ return (
             onChange={e => setName(e.target.value)}
           />
         </FormGroup>
-          <FormGroup controlId="name">
-          <FormLabel>Name</FormLabel>
+          <FormGroup controlId="description">
+          <FormLabel>Description</FormLabel>
           <FormControl
             autoFocus
             type="description"
@@ -51,6 +65,8 @@ return (
           Submit
         </Button>
   </StyledForm>
+        </Modal.Body>
+      </Modal>
 )
 }
 
