@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-// import ControlLabel from "react-bootstrap/ControlLabel";
 import { withFirebase } from '../../components/Firebase';
 import {StyledForm} from './styles';
 
