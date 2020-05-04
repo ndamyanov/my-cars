@@ -20,22 +20,23 @@ const ItemDetails = (props) => {
   }, [carId, uid])
 
   const onAddService = (service) => {
-    props.firebase.cars().child(uid).child(carId).child('services').push(service)
+    props.firebase.cars().child(uid).child(carId).child('services').push(service);
   };
 
   const onUpdateService = (service) => {
     let id = service.id;
-    debugger;
-    props.firebase.cars().child(uid).child(carId).child('services').child(id).set(service)
+    props.firebase.cars().child(uid).child(carId).child('services').child(id).set(service);
   };
+
+  const onDeleteService = (service) => {
+    let key = service.key;
+    props.firebase.cars().child(uid).child(carId).child('services').child(key).remove();
+  }
 
   // const {carNumber, vin, model, year} = value;
 return(
 <div>
   <h2>{car.carNumber}</h2>
-<div>
-test
-</div>
 <div>
  {car.vin}
 </div>
@@ -51,6 +52,7 @@ test
   //setData={setCar} 
   onAddService={onAddService} 
   onUpdateService={onUpdateService} 
+  onDeleteService={onDeleteService} 
   searchPattern={searchPattern} 
   setSearchPattern={setSearchPattern} />
 </div>

@@ -6,7 +6,7 @@ import {StyledForm} from './styles';
 
 const NewService = (props) => {
 
-  const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'));
+  const [date, setDate] = useState(new Date().toLocaleDateString('fr-CA'));
   const [description, setDescription] = useState('');
   const [km, setKm] = useState('');
   const {showModal, setShowModal, onAddService} = props;

@@ -38,33 +38,34 @@ export const StyledCard = styled.div`
   border-radius: 0.5em;
   margin: 1em;
   display: grid;
-  grid-template-areas:
-              "a a b b i"
-              "c c c c c"
-              "c c c c c";
   padding: 0.5em;
+  grid-template-columns: 1fr 1fr 3fr 1fr;
 `;
 
+//grid-template-columns: 1fr 1fr 4fr 1fr;
+
+
+// grid-template-areas:
+//               "date km km km i"
+//               "date desc desc desc i"
+//               "date desc desc desc i";
+
 export const Date = styled.h5`
-  grid-area: a;
   color: blue;
   text-align: left;
-  padding-left: 6em;
+  padding-left: 3em;
 `;
 
 export const Km = styled.h6`
-  grid-area: b;
   text-align: right;
   padding-right: 6em;
-
+  color: blue;
 `;
 
 export const Description = styled.div`
-  grid-area: c;
 `;
 
-export const UpdateIcon = styled.div`
-  grid-area: i;
+export const Icons = styled.div`
   text-align: right;
   padding-right: 3em;
   color: blue;
