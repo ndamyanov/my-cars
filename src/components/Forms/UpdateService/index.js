@@ -1,26 +1,41 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import { withFirebase } from '../../Firebase';
 import Modal from 'react-bootstrap/Modal'
 import {StyledForm} from './styles';
 
-const NewService = (props) => {
+const UpdateService = (props) => {
+  debugger;
+  const {showModal, setShowModal, onUpdateService, service} = props;
+ // const { date, description, km } = service;
 
-  const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'));
-  const [description, setDescription] = useState('');
-  const [km, setKm] = useState('');
-  const {showModal, setShowModal, onAddService} = props;
+  const [date, setDate] = useState(service.value ? service.value.date : '');
+  const [description, setDescription] = useState(service.value ? service.value.description : '');
+  const [km, setKm] = useState(service.value ? service.value.km : '');
+
+  useEffect(() => {
+   if(service.value) {
+    const { date, description, km } = service.value;
+    setDate(date);
+    setDescription(description);
+    setKm(km);
+   } 
+   
+
+  }, [service.value]);
 
   const validateForm = () => {
     return date !== ''
-        && km.length > 0
-        && description.length > 0;
+        && km && km.length > 0
+        && description && description.length > 0;
   }
 
-  const onNewService = (event) => {
+  const onSubmitUpdate = (event) => {
     event.preventDefault();
-  
-    onAddService({date: date,
+
+    onUpdateService({
+       id: service.key, 
+       date: date,
        description: description,
        km: km
       })
@@ -29,18 +44,17 @@ const NewService = (props) => {
   }
 return (
 
-
   <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            Add new Service
+           Details
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <StyledForm onSubmit={onNewService}>
+        <StyledForm onSubmit={onSubmitUpdate}>
         <FormGroup controlId="date">
           <FormLabel>Date</FormLabel>
           <FormControl
@@ -55,7 +69,7 @@ return (
           <FormControl as="textarea"
             style={{height: '10em'}}
             autoFocus
-            type="text"
+            type="textarea"
             value={description}
             onChange={e => setDescription(e.target.value)}
           />
@@ -71,7 +85,7 @@ return (
         </FormGroup>
 
     <Button block type="submit" disabled={!validateForm()}>
-          Submit
+          Save
         </Button>
   </StyledForm>
         </Modal.Body>
@@ -79,4 +93,4 @@ return (
 )
 }
 
-export default withFirebase(NewService);
+export default withFirebase(UpdateService);

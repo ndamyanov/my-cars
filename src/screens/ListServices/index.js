@@ -1,24 +1,32 @@
 import React, {useEffect, useState} from 'react';
-import ItemOverview from '../../components/ItemOverview';
-import {Container, AddButton, StyledCard, ListContainer} from './styles';
+import {Container, AddButton, StyledCard, ListContainer, Date, Km, Description, UpdateIcon} from './styles';
 import Search from '../../components/SearchField';
 import { withFirebase } from '../../components/Firebase';           
 
 import NewService from '../../components/Forms/NewService';
+import UpdateService from '../../components/Forms/UpdateService';
 import { Add } from '@material-ui/icons';
+import BuildIcon from '@material-ui/icons/Build';
 
 const ListServices = (props) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModalCreate, setShowModalCreate] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
   const [services, setServices] = useState([]);
+  const [serviceToUpdate, setServiceToUpdate] = useState({});
+
   // const [searchText, setSearchText] = useState([]);
 
-  let {data, searchPattern, setSearchPattern, onAddService} = props;
+  let {data, searchPattern, setSearchPattern, onAddService, onUpdateService} = props;
   let isAuthenticated = props.firebase.auth.currentUser === null;
   //let listItems = props.data;
 
+  const onUpdate = (currentService) => {
+    setShowModalUpdate(true);
+    setServiceToUpdate(currentService);
+  }
+
 useEffect(() => {
   let tempList;
-    debugger;
       if(data){
         tempList = Object.values(data).map(val => ({
           ...data[val],
@@ -33,20 +41,32 @@ useEffect(() => {
       setServices(tempList);
     }
 
-}, [data, searchPattern]);
+}, [data, searchPattern, serviceToUpdate]);
 
 return(
   <Container>
     <Search searchPattern={searchPattern} setSearchPattern={setSearchPattern} />
 
-    <AddButton hidden={isAuthenticated} onClick={() => setShowModal(true)}><Add fontSize="large" /></AddButton>
+    <AddButton hidden={isAuthenticated} onClick={() => setShowModalCreate(true)}><Add fontSize="large" /></AddButton>
     
-    <NewService onAddService={onAddService} showModal={showModal} setShowModal={setShowModal} />
+    <NewService onAddService={onAddService} showModal={showModalCreate} setShowModal={setShowModalCreate} />
+
+    <UpdateService 
+    service={serviceToUpdate}
+    onUpdateService={onUpdateService} 
+    showModal={showModalUpdate} 
+    setShowModal={setShowModalUpdate} />
     
-  {/* {list()} */}
-  <ListContainer>
-  {services.map(i => (<StyledCard>{i.value.date} => {i.value.description}</StyledCard>))}
-  </ListContainer>
+    <ListContainer>
+      {services.map(i => (
+        <StyledCard>
+          <Date>{i.value.date}</Date>
+          <Km>{i.value.km}km</Km>
+          <Description>{i.value.description}</Description>
+          <UpdateIcon onClick={() => onUpdate(i)}><BuildIcon fontSize="large"/></UpdateIcon>
+        </StyledCard>
+        ))}
+    </ListContainer>
   </Container>
 )
 }

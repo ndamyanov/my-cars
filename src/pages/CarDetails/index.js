@@ -3,7 +3,6 @@ import {useParams} from "react-router-dom";
 import { withFirebase } from '../../components/Firebase';
 import ListServices from '../../screens/ListServices';
 
-
 const ItemDetails = (props) => {
   const [car, setCar] = useState({});
   const [searchPattern, setSearchPattern] = useState('');
@@ -12,14 +11,22 @@ const ItemDetails = (props) => {
   const { carId } = useParams();
   
   useEffect(() => {
-    props.firebase.cars().child(uid).child(carId).on('value', snapshot => {
-      const currentCar = snapshot.val();
-      setCar(currentCar);
-  })
-  }, [carId])
+    if(carId && uid) {
+      props.firebase.cars().child(uid).child(carId).on('value', snapshot => {
+        const currentCar = snapshot.val();
+        setCar(currentCar);
+    })
+    }
+  }, [carId, uid])
 
   const onAddService = (service) => {
     props.firebase.cars().child(uid).child(carId).child('services').push(service)
+  };
+
+  const onUpdateService = (service) => {
+    let id = service.id;
+    debugger;
+    props.firebase.cars().child(uid).child(carId).child('services').child(id).set(service)
   };
 
   // const {carNumber, vin, model, year} = value;
@@ -43,6 +50,7 @@ test
   data={car.services}
   //setData={setCar} 
   onAddService={onAddService} 
+  onUpdateService={onUpdateService} 
   searchPattern={searchPattern} 
   setSearchPattern={setSearchPattern} />
 </div>

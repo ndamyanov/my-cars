@@ -3,7 +3,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 export const SearchField = styled.div`
   margin: 3em;
-  width: 100%;
+  width: 90%;
 `;
 
 export const StyledSearchIcon = styled(SearchIcon)`
