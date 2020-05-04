@@ -29,7 +29,7 @@ export const AddButton = styled.button`
 `;
 
 export const ListContainer = styled.div`
-  margin-left: 9em;
+  margin-left: 2em;
   width: 80%;
 `;
 
@@ -39,7 +39,7 @@ export const StyledCard = styled.div`
   margin: 1em;
   display: grid;
   padding: 0.5em;
-  grid-template-columns: 1fr 1fr 3fr 1fr;
+  grid-template-columns: 15% 15% 60% 10%;
 `;
 
 //grid-template-columns: 1fr 1fr 4fr 1fr;
@@ -50,13 +50,15 @@ export const StyledCard = styled.div`
 //               "date desc desc desc i"
 //               "date desc desc desc i";
 
-export const Date = styled.h5`
+export const Date = styled.div`
+  font-size: 1.2em;
   color: blue;
   text-align: left;
   padding-left: 3em;
 `;
 
-export const Km = styled.h6`
+export const Km = styled.div`
+  font-size: 1.2em;
   text-align: right;
   padding-right: 6em;
   color: blue;

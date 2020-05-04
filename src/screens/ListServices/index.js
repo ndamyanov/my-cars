@@ -81,7 +81,7 @@ return(
       {services.map(i => (
         <StyledCard>
           <Date>{i.value.date}</Date>
-          <Km>{i.value.km}km</Km>
+          <Km>{i.value.km} km</Km>
           <Description>{i.value.description}</Description>
           <Icons >
             <BuildIcon onClick={() => onUpdate(i)} fontSize="large"/>
