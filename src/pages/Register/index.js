@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { withFirebase } from '../../components/Firebase';
-import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { FormGroup, FormControl, FormLabel, Button } from "react-bootstrap";
 import {StyledForm} from './styles';
 
 const Register = (props) => {
@@ -25,10 +25,13 @@ const Register = (props) => {
      props.history.push('/');
   }
 
-  const isInvalid =
-  passwordOne !== passwordTwo ||
-  passwordOne === '' ||
-  email === '';
+  const validateForm = () => {
+    return (
+    passwordOne !== passwordTwo ||
+    passwordOne === '' ||
+    email === ''
+    );
+  }
 
 return (
 
@@ -61,7 +64,9 @@ return (
           />
         </FormGroup>
  
-        <button disabled={isInvalid} type="submit">Register</button>
+        <Button block disabled={validateForm()} type="submit">
+          Register
+        </Button>
         {error && <p>{error.message}</p>}
       </StyledForm>
 )

@@ -8,11 +8,11 @@ const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function validateForm() {
+  const validateForm = () => {
     return email.length > 0 && password.length > 0;
   }
 
-  function handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
     props.firebase.signIn(email, password)
     props.history.push('/');
