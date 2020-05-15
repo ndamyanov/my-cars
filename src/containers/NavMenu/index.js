@@ -26,10 +26,6 @@ const NavMenu = (props) => {
       <MenuItem>
         <Link to="/cars"><DriveEtaIcon fontSize="large" /></Link>
       </MenuItem>
-      <MenuItemSearch>
-        {/* <SearchInput type='text' placeholder='Search' /> */}
-      </MenuItemSearch>
-
       <MenuAction>
         
         <button type="submit" onClick={onExit}><ExitToAppIcon fontSize="large" /></button>
@@ -45,9 +41,9 @@ const NavMenu = (props) => {
       {/* <MenuItem>
         <Link to="/cars">Cars</Link> 
       </MenuItem> */}
-      <MenuItemSearch>
+      {/* <MenuItemSearch> */}
         {/* <SearchInput type='text' placeholder='Search' /> */}
-      </MenuItemSearch>
+      {/* </MenuItemSearch> */}
       <MenuAction>
         <Link to="/login">Login</Link>
       </MenuAction>

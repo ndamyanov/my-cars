@@ -3,6 +3,7 @@ import {Container, AddButton} from './styles';
 import { withFirebase } from '../../components/Firebase';
 import Search from '../../components/SearchField'; 
 import NewCar from '../../components/Forms/NewCar'; 
+import UpdateCar from '../../components/Forms/UpdateCar'; 
 import ItemOverview from '../../components/ItemOverview'; 
 import { Add } from '@material-ui/icons';
 
@@ -10,11 +11,17 @@ const Cars = (props) => {
 
   const [cars, setCars] = useState([]);
   const [searchPattern, setSearchPattern] = useState('');
-  const [showModal, setShowModal] = useState(false);
+  const [showModalCreate, setShowModalCreate] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
+  const [carToUpdate, setCarToUpdate] = useState({});
 
   const uid = props.firebase.auth.currentUser?.uid;
   const isAuthenticated = props.firebase.auth.currentUser === null;
 
+  const onUpdateCarClick = (currentCar) => {
+    setCarToUpdate(currentCar);
+    setShowModalUpdate(true);
+  }
 
   useEffect(() => {
     props.firebase.carsOfUser(uid).on('value', snapshot => {
@@ -44,11 +51,23 @@ return (
     {/* <ListItems data={cars} setData={setCars} searchPattern={searchPattern} setSearchPattern={setSearchPattern} /> */}
     <Search searchPattern={searchPattern} setSearchPattern={setSearchPattern} />
 
-    <AddButton hidden={isAuthenticated} onClick={() => setShowModal(true)}><Add fontSize="large" /></AddButton>
+    <AddButton hidden={isAuthenticated} onClick={() => setShowModalCreate(true)}><Add fontSize="large" /></AddButton>
     
-    <NewCar showModal={showModal} setShowModal={setShowModal} />
+    <NewCar showModal={showModalCreate} setShowModal={setShowModalCreate} />
 
-    {cars.map(i => (<ItemOverview data={i} key={i.value.name}></ItemOverview>))}
+    <UpdateCar 
+        showModal={showModalUpdate} 
+        setShowModal={setShowModalUpdate} 
+        car={carToUpdate} />
+
+    {cars.map(i => (
+    <ItemOverview 
+    data={i} 
+    key={i.value.carNumber} 
+    setShowModal={setShowModalUpdate}
+    onUpdateCarClick={() => onUpdateCarClick(i)}>
+    </ItemOverview>
+    ))}
     
   </Container>
 )

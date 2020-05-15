@@ -5,7 +5,6 @@ import Modal from 'react-bootstrap/Modal'
 import {StyledForm} from './styles';
 
 const UpdateService = (props) => {
-  debugger;
   const {showModal, setShowModal, onUpdateService, service} = props;
  // const { date, description, km } = service;
 
@@ -42,8 +41,8 @@ const UpdateService = (props) => {
 
     props.setShowModal(false);
   }
+  
 return (
-
   <Modal
         show={showModal}
         onHide={() => setShowModal(false)}

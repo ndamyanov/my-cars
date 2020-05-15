@@ -1,17 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import { withFirebase } from '../../Firebase';
 import Modal from 'react-bootstrap/Modal'
 import {StyledForm} from './styles';
 
-const NewCar = (props) => {
+const UpdateCar = (props) => {
+  debugger;
+  const {showModal, setShowModal, car} = props;
+  const uid = props.firebase.auth.currentUser?.uid;
 
-  const [username, setUsername] = useState('');
-  const [carNumber, setCarNumber] = useState('');
-  const [vin, setVin] = useState('');
-  const [model, setModel] = useState('');
-  const [year, setYear] = useState('');
-  const {showModal, setShowModal} = props;
+ const [username, setUsername] = useState(car.value ? car.value.username : '');
+ const [carNumber, setCarNumber] = useState(car.value ? car.value.carNumber : '');
+ const [vin, setVin] = useState(car.value ? car.value.vin : '');
+ const [model, setModel] = useState(car.value ? car.value.model : '');
+ const [year, setYear] = useState(car.value ? car.value.year : '');
+
+  useEffect(() => {
+   if(car.value) {
+    const { username, carNumber, vin, model, year } = car.value;
+    setUsername(username);
+    setCarNumber(carNumber);
+    setVin(vin);
+    setModel(model);
+    setYear(year);
+   } 
+  }, [car.value]);
 
   const validateForm = () => {
     return username.length > 0 
@@ -21,23 +34,22 @@ const NewCar = (props) => {
         && year.length > 0;
   }
 
-  const onNewCar = (event) => {
+  const onSubmitUpdate = (event) => {
     event.preventDefault();
-
-    let uid = props.firebase.auth.currentUser.uid;
-    props.firebase.cars().child(uid).push({
+    console.log(username);
+    debugger;
+    const car = {
       username: username,
       carNumber: carNumber,
       vin: vin,
       model: model,
-      year: year,
-    });
+      year: year
+    };
 
-    // props.firebase.cars().child(uid).child(uid).set({
-    //   // carId: uid,
-    //   name: name,
-    //   description: description
-    // });
+    const carId = props.car.key;
+    debugger;
+    props.firebase.cars().child(uid).child(carId).set(car);
+
     props.setShowModal(false);
   }
 return (
@@ -49,11 +61,11 @@ return (
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            Add new Car
+            Update Car
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <StyledForm onSubmit={onNewCar}>
+        <StyledForm onSubmit={onSubmitUpdate}>
         <FormGroup controlId="username">
           <FormLabel> Name</FormLabel>
           <FormControl
@@ -100,7 +112,7 @@ return (
           />
         </FormGroup>
     <Button block type="submit" disabled={!validateForm()}>
-          Submit
+          Update
         </Button>
   </StyledForm>
         </Modal.Body>
@@ -108,4 +120,4 @@ return (
 )
 }
 
-export default withFirebase(NewCar);
+export default withFirebase(UpdateCar);

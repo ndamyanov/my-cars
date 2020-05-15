@@ -37,15 +37,18 @@ const ItemDetails = (props) => {
 return(
 <div>
   <h2>{car.carNumber}</h2>
+  <h4>
+ {car.username}
+</h4>
 <div>
  {car.vin}
 </div>
-<div>
+<h4>
  {car.model}
-</div>
-<div>
+</h4>
+<h6>
  {car.year}
-</div>
+</h6>
 <div>
  <ListServices
   data={car.services}
