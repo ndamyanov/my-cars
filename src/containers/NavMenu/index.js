@@ -1,6 +1,6 @@
 import React from 'react';
 //import { connect } from 'react-redux';
-import {Container, MenuItem, MenuAction, MenuItemSearch, SearchInput} from './styles';
+import {Container, MenuItem, MenuAction} from './styles';
 import {Link} from "react-router-dom";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
