@@ -40,6 +40,11 @@ export const StyledCard = styled.div`
   display: grid;
   padding: 0.5em;
   grid-template-columns: 15% 15% 60% 10%;
+
+    @media (max-width: 600px) {
+      display: flex;
+      flex-direction: column;
+    }
 `;
 
 //grid-template-columns: 1fr 1fr 4fr 1fr;
