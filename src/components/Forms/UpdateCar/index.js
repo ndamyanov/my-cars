@@ -5,7 +5,6 @@ import Modal from 'react-bootstrap/Modal'
 import {StyledForm} from './styles';
 
 const UpdateCar = (props) => {
-  debugger;
   const {showModal, setShowModal, car} = props;
   const uid = props.firebase.auth.currentUser?.uid;
 
@@ -37,7 +36,6 @@ const UpdateCar = (props) => {
   const onSubmitUpdate = (event) => {
     event.preventDefault();
     console.log(username);
-    debugger;
     const car = {
       username: username,
       carNumber: carNumber,
@@ -47,7 +45,6 @@ const UpdateCar = (props) => {
     };
 
     const carId = props.car.key;
-    debugger;
     props.firebase.cars().child(uid).child(carId).set(car);
 
     props.setShowModal(false);
